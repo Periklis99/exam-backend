@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CandidateServiceImpl {
+public class CandidateServiceImpl implements CandidateServiceInterface {
     private PartyRepo partyRepo;
     private CandidateRepo candidateRepo;
 
@@ -23,30 +23,31 @@ public class CandidateServiceImpl {
         this.candidateRepo = candidateRepo;
     }
 
-
+    @Override
     public Candidate createCandidate (CandidateDto dto){
       Candidate candidate = modelMapper.map(dto, Candidate.class);
         Party party = partyRepo.findById(dto.getParty_id()).orElseThrow();
         candidate.setParty(party);
      return candidateRepo.save(candidate);
     }
-
+    @Override
     public Candidate editCandidate (CandidateDto dto){
         Candidate candidate = candidateRepo.findById(dto.getId()).orElseThrow();
         Party party = partyRepo.findById(dto.getParty_id()).orElseThrow();
         candidate.setParty(party);
         return candidateRepo.save(candidate);
     }
-
+    @Override
     public void deleteCandidate(CandidateDto dto){
         Candidate candidate = candidateRepo.findById(dto.getId()).orElseThrow();
         candidateRepo.delete(candidate);
     }
-
+    @Override
     public List<Candidate> getAllCandidates(){
          List<Candidate> candidates = candidateRepo.findAll();
         return candidates;
     }
+    @Override
     public List<Candidate> getCandidatesForParty(int id){
         return candidateRepo.findAllByParty_Id(id);
     }

@@ -5,6 +5,7 @@ import com.example.examproject.Candidate.Entity.Candidate;
 import com.example.examproject.Candidate.Repo.CandidateRepo;
 import com.example.examproject.Candidate.Service.CandidateServiceImpl;
 import com.example.examproject.Candidate.Service.CandidateServiceInterface;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping( produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping( path = "/api",produces = MediaType.APPLICATION_JSON_VALUE)
 public class CandidateController {
-
+    @Autowired
     private CandidateServiceInterface candidateService;
 
 
@@ -29,7 +30,8 @@ public class CandidateController {
 
     @GetMapping
     List<Candidate> getAllCandidates(){
-        return candidateService.getAllCandidates();
+        List<Candidate> candidates = candidateService.getAllCandidates();
+         return candidates;
     }
 
     @GetMapping(path = "/{id}")
@@ -38,7 +40,7 @@ public class CandidateController {
     }
 
     @DeleteMapping
-    void deleteCandidate(CandidateDto dto){
+    void deleteCandidate(@RequestBody CandidateDto dto){
         candidateService.deleteCandidate(dto);
     }
 

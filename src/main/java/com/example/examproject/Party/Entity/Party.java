@@ -1,6 +1,7 @@
 package com.example.examproject.Party.Entity;
 
 import com.example.examproject.Candidate.Entity.Candidate;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class Party {
     private String name;
 
     @OneToMany(mappedBy = "party")
+    @JsonIgnore
     private Set<Candidate> candidates;
 
 }

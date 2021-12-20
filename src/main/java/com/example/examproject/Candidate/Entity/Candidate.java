@@ -23,7 +23,7 @@ public class Candidate {
     @Column(unique = true)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "party_id")
     private Party party;
 
